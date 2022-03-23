@@ -109,10 +109,11 @@ namespace yourNamespace
         /// <param name="callback">A function delegate to be called if the value is in range</param>
         /// <param name="testValue">The value to test</param>
         /// <param name="errorMsg">The message to use in the exception if the value is not in range</param>
+        /// <param name="inclusive">Defaults to testing the range inclusively. Set to false for exclusive.</param>
         /// <exception cref="ArgumentException"></exception>
-        public void RunIfInRange(Action callback, int testValue, string errorMsg)
+        public void RunIfInRange(Action callback, int testValue, string errorMsg, bool inclusive = true)
         {
-            if (this.IsInRangeInclusive(testValue))
+            if ((inclusive && this.IsInRangeInclusive(testValue)) || (!inclusive && this.IsInRangeExclusive(testValue)))
             {
                 callback();
             }
@@ -128,11 +129,12 @@ namespace yourNamespace
         /// <param name="callback">A function delegate to be called if the value is in range, which must return a value</param>
         /// <param name="testValue">The value to test</param>
         /// <param name="errorMsg">The message to use in the exception if the value is not in range</param>
+        /// <param name="inclusive">Defaults to testing the range inclusively. Set to false for exclusive.</param>
         /// <returns>Passes the callback delegate's return value on</returns>
         /// <exception cref="ArgumentException"></exception>
-        public dynamic RunIfInRangeAndReturn(Func<dynamic> callback, int testValue, string errorMsg)
+        public dynamic RunIfInRangeAndReturn(Func<dynamic> callback, int testValue, string errorMsg, bool inclusive = true)
         {
-            if (this.IsInRangeInclusive(testValue))
+            if ((inclusive && this.IsInRangeInclusive(testValue)) || (!inclusive && this.IsInRangeExclusive(testValue)))
             {
                 return callback();
             }
